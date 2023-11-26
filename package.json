@@ -31,6 +31,7 @@
   },
   "homepage": "https://github.com/jcaiqueoliveira/josecaique.com#readme",
   "devDependencies": {
-    "gulp": "^4.0.2"
+    "gulp": "^4.0.2",
+    "gulp-gh-pages": "^0.5.4"
   }
 }
