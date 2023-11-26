@@ -3,7 +3,7 @@
   align-items: center;
   &:hover {
     span {
-      color: var(--pink);
+      color: var(--primary);
     }
   }
   span {
@@ -47,7 +47,7 @@
     border-radius: 0 0.4rem 0.4rem 0;
     width: 3.6rem;
     height: 3.6rem;
-    background-color: var(--pink);
+    background-color: var(--primary);
     transition: filter 0.3s ease;
     &:hover {
       filter: brightness(0.8);
@@ -67,7 +67,7 @@
     }
     .info {
       h3 {
-        color: var(--pink);
+        color: var(--primary);
       }
     }
   }
@@ -156,7 +156,7 @@
     }
     .info {
       h6 {
-        color: var(--pink);
+        color: var(--primary);
       }
     }
   }
@@ -235,7 +235,7 @@
     }
     .info {
       h6 {
-        color: var(--pink);
+        color: var(--primary);
       }
     }
   }
@@ -309,12 +309,12 @@
   font-weight: 600;
   font-size: 1.6rem;
   line-height: 100%;
-  color: var(--pink);
-  border: 1px solid rgba(246, 122, 203, 0.55);
+  color: var(--primary);
+  border: 1px solid var(--primary);
   border-radius: 0.8rem;
   transition: all 0.3s ease;
   &:hover {
-    background-color: var(--pink);
+    background-color: var(--primary);
     color: var(--white);
   }
 }
@@ -383,7 +383,7 @@
         background-color: rgba(255, 255, 255, 0.1);
         backdrop-filter: blur(3.2rem);
         border-radius: 8rem;
-        color: var(--pink);
+        color: var(--primary);
         font-size: 1.3rem;
         font-weight: 600;
         line-height: 105%;
@@ -414,7 +414,7 @@
         font-size: 1.4rem;
         font-weight: 600;
         line-height: 120%;
-        color: var(--pink);
+        color: var(--primary);
       }
     }
   }
@@ -435,5 +435,5 @@
   line-height: 105%;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: var(--pink);
+  color: var(--primary);
 }

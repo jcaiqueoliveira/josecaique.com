@@ -173,7 +173,7 @@
               &.active,
               &:hover {
                 &:before {
-                  background-color: var(--pink);
+                  background-color: var(--primary);
                 }
                 span {
                   color: var(--gray-01);
@@ -204,7 +204,7 @@
           align-items: center;
           &:hover {
             span {
-              color: var(--pink);
+              color: var(--primary);
             }
           }
           span {

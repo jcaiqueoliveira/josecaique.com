@@ -1,5 +1,5 @@
 {
-  "name": "projeto-blog",
+  "name": "josecaique",
   "version": "1.0.0",
   "description": "Um projeto criado para o curso Codeboost",
   "main": "index.js",
@@ -9,12 +9,28 @@
     "@babel/core": "^7.21.0",
     "@babel/preset-env": "^7.20.2",
     "browser-sync": "^2.27.11",
-    "gulp": "^4.0.2",
     "gulp-autoprefixer": "^8.0.0",
     "gulp-babel": "^8.0.0",
     "gulp-concat": "^2.6.1",
     "gulp-sass": "^5.1.0",
     "gulp-uglify": "^3.0.2",
     "sass": "^1.58.3"
+  },
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jcaiqueoliveira/josecaique.com.git"
+  },
+  "keywords": [
+    "blog"
+  ],
+  "bugs": {
+    "url": "https://github.com/jcaiqueoliveira/josecaique.com/issues"
+  },
+  "homepage": "https://github.com/jcaiqueoliveira/josecaique.com#readme",
+  "devDependencies": {
+    "gulp": "^4.0.2"
   }
 }

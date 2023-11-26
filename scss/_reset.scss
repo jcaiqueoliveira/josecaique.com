@@ -7,7 +7,7 @@
 }
 
 ::selection {
-  background-color: var(--pink);
+  background-color: var(--primary);
   color: var(--white);
 }
 
@@ -27,7 +27,7 @@ html {
 }
 
 body {
-  font-family: "Atyp BL Text", sans-serif;
+  font-family: "Work Sans", sans-serif;
   font-size: 1rem;
   background-color: var(--gray-01);
 }
@@ -39,12 +39,12 @@ a {
 
 section {
   @media (max-width: 1200px) {
-    padding: 6rem 0rem !important;
+    padding: 6rem 0 !important;
   }
   @media (max-width: 768px) {
-    padding: 5rem 0rem !important;
+    padding: 5rem 0 !important;
   }
   @media (max-width: 560px) {
-    padding: 4rem 0rem !important;
+    padding: 4rem 0 !important;
   }
 }
