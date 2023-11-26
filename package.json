@@ -1,9 +1,9 @@
 {
   "name": "josecaique",
   "version": "1.0.0",
-  "description": "Um projeto criado para o curso Codeboost",
+  "description": "website pessoal",
   "main": "index.js",
-  "author": "Leonardo Andrade",
+  "author": "José Caique",
   "license": "MIT",
   "dependencies": {
     "@babel/core": "^7.21.0",

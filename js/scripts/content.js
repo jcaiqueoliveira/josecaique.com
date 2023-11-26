@@ -12,8 +12,40 @@ function loadPage(page, content) {
                 }
             }
             document.getElementById('content').innerHTML = html;
+
+            if(page === Pages.home){
+                const script = document.createElement('script');
+                script.src = './js/all.js';
+                script.defer = true;
+                document.head.appendChild(script);
+
+                const podcastSlider1 = document.getElementById('podcast-slider-id');
+                loadSlide()
+            }
         })
         .catch(error => console.error('Erro ao carregar componente:', error));
+}
+
+function sliderConfig(){
+    return new Swiper(".slide-podcast", {
+        slidesPerView: 4,
+        spaceBetween: 32,
+        pagination: {
+            el: ".s-podcast .top-container .swiper-pagination",
+            clickable: true,
+        },
+        navigation: {
+            nextEl: ".s-podcast .top-container .btn-next",
+            prevEl: ".s-podcast .top-container .btn-prev",
+        },
+        speed: 600,
+        breakpoints: {
+            320: { slidesPerView: 1 },
+            768: { slidesPerView: 2 },
+            991: { slidesPerView: 3 },
+            1150: { slidesPerView: 4 },
+        },
+    });
 }
 
 // Function to add menu without repetition of html
@@ -32,10 +64,6 @@ function generateMenu() {
         link.href = '#';
         link.className = 'item-categorie';
         link.onclick = function() {
-            console.log(item)
-            console.log(item.page.page)
-            console.log(item.page.content)
-           
             loadPage(item.page, item.page.content);
             return false;
         };
@@ -47,10 +75,4 @@ function generateMenu() {
         listItem.appendChild(link);
         menuContainer.appendChild(listItem);
     });
-}
-
-// Chame a função para incluir os arquivos HTML quando a página carregar
-window.onload = function() {
-    generateMenu();
-    loadPage(Pages.home, datahighlights)
 }
