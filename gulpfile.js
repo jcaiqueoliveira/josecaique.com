@@ -5,6 +5,7 @@ const browserSync = require('browser-sync').create();
 const concat = require('gulp-concat');
 const babel = require('gulp-babel');
 const uglify = require('gulp-uglify');
+var deploy      = require('gulp-gh-pages');
 
 // Compilando o Sass, adicionando autoprefixed e dando refresh na página
 function compilaSass() {
@@ -84,9 +85,6 @@ gulp.task('watch', watch);
 
 // Tarefa Default que executa o Watch e o Browser Sync
 gulp.task('default', gulp.parallel('watch', 'browser-sync', 'sass', 'pluginscss', 'alljs', 'pluginsjs'));
-
-var gulp        = require('gulp');
-var deploy      = require('gulp-gh-pages');
 
 /**
  * Push build to gh-pages
