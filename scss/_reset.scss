@@ -1,0 +1,50 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  list-style-type: none;
+}
+
+::selection {
+  background-color: var(--pink);
+  color: var(--white);
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  border: 0;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: "Atyp BL Text", sans-serif;
+  font-size: 1rem;
+  background-color: var(--gray-01);
+}
+
+a {
+  text-decoration: none;
+  display: inline-block;
+}
+
+section {
+  @media (max-width: 1200px) {
+    padding: 6rem 0rem !important;
+  }
+  @media (max-width: 768px) {
+    padding: 5rem 0rem !important;
+  }
+  @media (max-width: 560px) {
+    padding: 4rem 0rem !important;
+  }
+}
