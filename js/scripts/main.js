@@ -35,11 +35,11 @@ btnScrollTop.addEventListener("click", () => {
   });
 });
 
-//const btnMobile = document.getElementById("js-btn-mobile");
-//
-//btnMobile.addEventListener("click", () => {
-//  btnMobile.classList.toggle("is-active");
-//});
+const btnMobile = document.getElementById("js-btn-mobile");
+
+btnMobile.addEventListener("click", () => {
+  btnMobile.classList.toggle("is-active");
+});
 
 
 //document.addEventListener("DOMContentLoaded", function () {
