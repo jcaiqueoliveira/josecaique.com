@@ -64,7 +64,7 @@ const aboutContent = {
 
 
 function getPage(page){
-    return  "../../pages/"+ page; 
+    return  "../../pages/" + page; 
 }
 
 const Pages = {

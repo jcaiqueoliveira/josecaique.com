@@ -7,7 +7,6 @@ btnScrollTop.addEventListener("click", () => {
   });
 });
 
-
 document.addEventListener("DOMContentLoaded", function (){
   loadPage(Pages.home, datahighlights)
 })
