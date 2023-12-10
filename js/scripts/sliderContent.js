@@ -2,7 +2,6 @@
 function loadSlide(){
 
     const podcastSlider = document.getElementById('podcast-slider-id');
-    console.log(podcastSlider)
     videos.forEach(video => {
         const slideHTML = `
             <div class="swiper-slide">
@@ -27,7 +26,6 @@ function loadSlide(){
                 </a>
             </div>
         `;
-        console.log("a")
         podcastSlider.insertAdjacentHTML('beforeend', slideHTML);
     });
     

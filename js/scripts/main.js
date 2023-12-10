@@ -1,31 +1,3 @@
-const slide_podcast = new Swiper(".slide-podcast", {
-  slidesPerView: 4,
-  spaceBetween: 32,
-  pagination: {
-    el: ".s-podcast .top-container .swiper-pagination",
-    clickable: true,
-  },
-  navigation: {
-    nextEl: ".s-podcast .top-container .btn-next",
-    prevEl: ".s-podcast .top-container .btn-prev",
-  },
-  speed: 600,
-  breakpoints: {
-    320: {
-      slidesPerView: 1,
-    },
-    768: {
-      slidesPerView: 2,
-    },
-    991: {
-      slidesPerView: 3,
-    },
-    1150: {
-      slidesPerView: 4,
-    },
-  },
-});
-
 const btnScrollTop = document.getElementById("js-btn-scroll-top");
 
 btnScrollTop.addEventListener("click", () => {
@@ -102,6 +74,4 @@ btnMobile.addEventListener("click", () => {
 
 document.addEventListener("DOMContentLoaded", function (){
   loadPage(Pages.home, datahighlights)
-//  const podcastSlider = document.getElementById('podcast-slider-id');
-//  console.log(podcastSlider)
 })
