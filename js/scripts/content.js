@@ -1,4 +1,3 @@
-
 // Function to load page dinamically
 function loadPage(page, content) {
     const pageContent = getPage(page.page);
@@ -74,5 +73,11 @@ function generateMenu() {
         link.appendChild(span);
         listItem.appendChild(link);
         menuContainer.appendChild(listItem);
+    });
+
+    const btnMobile = document.getElementById("js-btn-mobile");
+
+    btnMobile.addEventListener("click", () => {
+        btnMobile.classList.toggle("is-active");
     });
 }
