@@ -2,16 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://josecaique.com/categories/</loc>
+    <loc>https://josecaique.com/blog/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="pt"
-                href="https://josecaique.com/pt/categories/"
+                href="https://josecaique.com/pt/blog/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://josecaique.com/categories/"
+                href="https://josecaique.com/blog/"
+                />
+  </url><url>
+    <loc>https://josecaique.com/blog/hello/</loc>
+  </url><url>
+    <loc>https://josecaique.com/blog/</loc>
+    <xhtml:link
+                rel="alternate"
+                hreflang="pt"
+                href="https://josecaique.com/pt/blog/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://josecaique.com/blog/"
                 />
   </url><url>
     <loc>https://josecaique.com/</loc>
@@ -24,6 +38,18 @@
                 rel="alternate"
                 hreflang="en"
                 href="https://josecaique.com/"
+                />
+  </url><url>
+    <loc>https://josecaique.com/series/</loc>
+    <xhtml:link
+                rel="alternate"
+                hreflang="pt"
+                href="https://josecaique.com/pt/series/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://josecaique.com/series/"
                 />
   </url><url>
     <loc>https://josecaique.com/tags/</loc>

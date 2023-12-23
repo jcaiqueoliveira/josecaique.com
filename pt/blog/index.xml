@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>José Caique</title>
-    <link>https://josecaique.com/pt/</link>
-    <description>Recent content on José Caique</description>
+    <title>Blogs on José Caique</title>
+    <link>https://josecaique.com/pt/blog/</link>
+    <description>Recent content in Blogs on José Caique</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>pt</language>
     <managingEditor>jcaique.jc@gmail.com (José Caique)</managingEditor>
     <webMaster>jcaique.jc@gmail.com (José Caique)</webMaster>
-    <copyright>2023 José Caique All rights reserved</copyright><atom:link href="https://josecaique.com/pt/index.xml" rel="self" type="application/rss+xml" />
+    <copyright>2023 José Caique All rights reserved</copyright><atom:link href="https://josecaique.com/pt/blog/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Blog</title>
       <link>https://josecaique.com/pt/blog/pt/hello/</link>
