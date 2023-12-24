@@ -8,23 +8,87 @@
     <language>pt-br</language>
     <managingEditor>jcaique.jc@gmail.com (José Caique)</managingEditor>
     <webMaster>jcaique.jc@gmail.com (José Caique)</webMaster>
-    <lastBuildDate>Sun, 24 Dec 2023 16:13:01 +0100</lastBuildDate><atom:link href="https://josecaique.com/pt-br/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 04 Apr 2023 14:23:18 +0100</lastBuildDate><atom:link href="https://josecaique.com/pt-br/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Teste</title>
-      <link>https://josecaique.com/pt-br/blog/pt-br/teste/</link>
-      <pubDate>Sun, 24 Dec 2023 16:13:01 +0100</pubDate>
+      <title>Matenha sua funcionalidade simples</title>
+      <link>https://josecaique.com/pt-br/blog/pt-br/simples/</link>
+      <pubDate>Tue, 04 Apr 2023 14:23:18 +0100</pubDate>
       <author>jcaique.jc@gmail.com (José Caique)</author>
-      <guid>https://josecaique.com/pt-br/blog/pt-br/teste/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Test</title>
-      <link>https://josecaique.com/pt-br/blog/pt-br/test/</link>
-      <pubDate>Sun, 24 Dec 2023 14:23:18 +0100</pubDate>
-      <author>jcaique.jc@gmail.com (José Caique)</author>
-      <guid>https://josecaique.com/pt-br/blog/pt-br/test/</guid>
-      <description>&lt;p&gt;um blog post&lt;/p&gt;
+      <guid>https://josecaique.com/pt-br/blog/pt-br/simples/</guid>
+      <description>&lt;h2 id=&#34;introdução&#34;&gt;Introdução&lt;/h2&gt;
+&lt;p&gt;Existe a tendência natural a buscar definir padrões que venham a facilitar o desenvolvimento de novas funcionalidades, de modo a manter uma certa consistência entre as mais variadas funcionalidades de uma aplicação.&lt;/p&gt;
+&lt;p&gt;Tais padrões tendem podem ser úteis por exemplo ao adicionar um novo membro a equipe, que poderá ter sua vida facilitada para conseguir contribuir com um projeto já que toda funcionalidade possui mais ou menos a mesma forma.&lt;/p&gt;
+&lt;p&gt;Entretanto, é importante sempre pensar sobre a utilidade que um trecho de código adiciona ao projeto. Defender por exemplo que um certo pedaço de código existe apenas para manter um padrão entre todas as funcionalidades é furada.&lt;/p&gt;
+&lt;p&gt;Ao definir o comportamento entre fronteiras abre-se espaço para a geração complexidade. É muito comum que seja feito um abuso de interfaces com apenas uma implementação, ou uma busca, desnecessária, por criar abstrações sobre abstrações, com o objetivo de isolar e proteger o código contra possíveis mudanças no futuro. É comum ouvir, “esse mapeamento é para que o framework de serialização não passe por camadas de dados até a apresentação” e dessa forma tenta evitar uma débito que talvez não venha sequer a existir no futuro.&lt;/p&gt;
+&lt;p&gt;Vale lembrar que funcionalidades passam por mudanças, adicionam novos comportamentos e inevitavelmente vão quebram padrões adicionados precocemente, com isso, o padrão que deveria ajudar no futuro, gera um stress no presente por tornar qualquer alteração muito lenta ou complexa de ser feita.&lt;/p&gt;
+&lt;h3 id=&#34;vamos-a-um-exemplo&#34;&gt;Vamos a um exemplo&lt;/h3&gt;
+&lt;p&gt;Supona a seguinte estrutura básica para exibir uma lista para um usuário.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;// module/subproject
+-- feature-list-characters
+--- domain
+--- data
+--- presentation
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;O código dentro desse módulo ou subprojeto resolve um problema bem específico e há uma proximidade entre as três camadas apresentadas, já que partes do sistema que são alteradas em conjunto devem estar próximas.
+As camadas data, domain e presentation fazem parte da mesma fronteira, de modo que a comunicação entre tais camadas deve ser realizada de forma simples.&lt;/p&gt;
+&lt;p&gt;A seguir um exemplo de abstração a ser repensada se gera algum valor.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-kotlin&#34; data-lang=&#34;kotlin&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;internal&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;interface&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;RickAndMortyService&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;suspend&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;fun&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;listCharacters&lt;/span&gt;(): List&amp;lt;Character&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;internal&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;RickAndMortyInfraStructure&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;@Inject&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;constructor&lt;/span&gt;(
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;val&lt;/span&gt; gateway: RickAndMortyGateway
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;) : RickAndMortyService {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;override&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;suspend&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;fun&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;listCharacters&lt;/span&gt;(): List&amp;lt;Character&amp;gt; = gateway.getCharacters().results
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;internal&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;RickAndMortyViewModel&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;@Inject&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;constructor&lt;/span&gt;(
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;val&lt;/span&gt; service: RickAndMortyService
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;) : ViewModel() {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;..&lt;/span&gt;.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;Deletar&lt;/strong&gt; a interface acima não vai gerar nenhuma diferença? Não.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Essa interface faz parte apenas de uma única funcionalidade e não será utilizada em nenhuma outra parte do projeto&lt;/li&gt;
+&lt;li&gt;Nunca haverá uma segunda implementação dessa interface&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Criar uma abstração na mesma fronteira, para um código que sempre será alterado em conjunto não traz muito valor. Vale pensar e associar que, sempre que é alterado o &lt;em&gt;RickAndMortyViewModel&lt;/em&gt; a interface &lt;em&gt;RickAndMortyService&lt;/em&gt; tende a sofrer alterações sempre que os dados providos mudarem ou se novos comportamentos forem adicionados, por exemplo, deletar um personagem a interface forçadamente seria alterada.&lt;/p&gt;
+&lt;p&gt;Vale pensar então no benefício que tal interface provê, no fim não há motivos para ser complexo, uma vez que essas partes da mesma funcionalidade possuem um acoplamento natural (ao se alterar o &lt;em&gt;RickAndMortyViewModel&lt;/em&gt; tende-se a alterar a RickAndMortyInfraStructure também) e tudo bem.&lt;/p&gt;
+&lt;p&gt;Defender o uso da interface como um facilitador para criação de teste não faz tanto sentido, uma vez que ao &lt;em&gt;RickAndMortyGateway&lt;/em&gt; pode ser substituída por um fake e os testes vão terminar exercitando mais partes do código ao se evitar o mock da classe &lt;em&gt;RickAndMortyInfraStructure&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Mock vs Fake pode ser um assunto para outro momento. Você pode olhar aqui sobre o assunto.&lt;/p&gt;
+&lt;p&gt;Para simplificar desenvolvimento, ao invés de buscar por padrões já definidos, é interessante pensar no potencial uso dessa funcionalidade. Se o que está prestes a ser desenvolvido é algo que será isolado de todo o sistema, há um espaço para ser objetivo e simples.&lt;/p&gt;
+&lt;p&gt;Por exemplo, qual o ganho em fazer mapeamento de um Data transfer object para uma data class sem anotações que no fim será uma listagem simples na tela do usuário? Nenhum. O que se ganha com tal mapeamento é a falta de produtividade em prol de uma padronização que não leva a nada já que se trata de uma parte do sistema naturalmente isolada.&lt;/p&gt;
+&lt;p&gt;Ao simplificar temos espaço para remover o que for desnecessário. Pode-se considerar uma deleção de código em casos como:&lt;/p&gt;
+&lt;p&gt;Checar interfaces com uma única implementação (pode ser um indicativo para remoção)
+Remover mapeamentos que servem simplesmente para remover anotações de serialização de classes. Um mapeamento quando se é útil tende a possuir validações que diminuem cenários de erros em que a aplicação poderá passar.
+O tal do &lt;em&gt;usecase&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id=&#34;quando-ser-complexo&#34;&gt;Quando ser complexo&lt;/h2&gt;
+&lt;p&gt;Quando uma funcionalidade toca diversas partes de um sistema, criar boas abstrações visa proteger a aplicação contra estados de erro não mapeados. Tais funcionalidades costumam fazer parte do núcleo do sistema e devem abusar da quantidade de validações e regras dado o impacto que podem causar em todo software.&lt;/p&gt;
+&lt;p&gt;Um exemplo bem simples é a representação de documento do usuário feito através de um tipo primitivo como long.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-kotlin&#34; data-lang=&#34;kotlin&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;val&lt;/span&gt; document: Long
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Não há nenhuma validação do documento que venha a ser passado, nenhuma regra pode ser aplicada para proteger as partes do sistema que venham a fazer uso dessa informação.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-kotlin&#34; data-lang=&#34;kotlin&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;data&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Document&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;val&lt;/span&gt; value : Long) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;init&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt;(isValid().not()) &lt;span style=&#34;color:#66d9ef&#34;&gt;throw&lt;/span&gt; ExceptionInInitializerError(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;invalid document&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;fun&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;isValid&lt;/span&gt;() = &lt;span style=&#34;color:#66d9ef&#34;&gt;value&lt;/span&gt;.toString().length &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;9&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;fun&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;get&lt;/span&gt;() = &lt;span style=&#34;color:#66d9ef&#34;&gt;value&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Com a validação acima é garantido que todo o sistema sempre usará um documento válido, caso contrário o sistema não é inicializado.&lt;/p&gt;
+&lt;p&gt;Complexidade aqui significa definições bem feitas em prol de regras claras sobre o funcionamento de uma funcionalidade utilizada em partes diversas da aplicação.&lt;/p&gt;
+&lt;p&gt;Um outro bom exemplo é a sessão de um usuário, de modo geral com a evolução de um produto novas condições são adicionadas para validar se um usuário é válido, ou se a autentição ainda é válida. Porém de modo geral a interface não sofre muita alteração&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-kotlin&#34; data-lang=&#34;kotlin&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;interface&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Session&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;fun&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;getUser&lt;/span&gt;(): User
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;fun&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;login&lt;/span&gt;(params: UserCredentials)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;fun&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;logout&lt;/span&gt;()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Independente do detalhe da implementação há pouco espaço para breaking changes e todas as
+funcionalidades que dependam da sessão dificilmente serão impactadas pelas mudanças internas de tal classe.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Para definir uma boa fronteira&lt;/strong&gt; deve-se entender o impacto a ser gerado pelo código e o quão isolada aquela funcionalidade vai ser. Quando se há muita interação entre funcionalidades diferentes, vale definir de forma clara e com boas validações como funciona um contrato. Foque em ser coeso.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Padrões não úteis surgem&lt;/strong&gt; como uma boa intenção, quem cria costuma pensar em simplificar o dia a dia. Isso é bem comum quando em aplicações em seu começo, por pensar que com todos os códigos seguindo a mesma estrutura isso tornará mais simples para ajudar por exemplo a entender o código do colega de trabalho ao lado.&lt;/p&gt;
+&lt;p&gt;Tal prerrogativa tem um problema, quando os sistemas crescem a realidade é que a equipe vai trabalhar isoladamente em seu pedaço de software. Essa parte da equipe entenderá de um complexo número de regras de negócio daquela funcionalidade, isso torna humanamente impossível que o mesmo desenvolvedor consiga, via de regra, contribuir com outras funcionalidades simplesmente porque a forma como o código está escrito é parecido em toda a aplicação.&lt;/p&gt;
+&lt;p&gt;Então apesar de a intenção ser boa, quando em grande escala tais definições podem virar apenas dor de cabeça, gerar lentidão no desenvolvimento e causar problemas na adaptação de desenvolvedores a um estilo de código diferente uma vez que não há um ganho claro ao se seguir certos padrões.&lt;/p&gt;
+&lt;p&gt;Então evite prever tanto o futuro, mantenha seu código simples sempre que possível.&lt;/p&gt;
 </description>
     </item>
     

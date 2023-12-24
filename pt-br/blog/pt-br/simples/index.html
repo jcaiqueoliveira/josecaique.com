@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="pt-br"><head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matenha sua funcionalidade simples</title>
+    <meta charset="utf-8">
+    <meta name="description" content="Ladder@Introdução Existe a tendência natural a buscar definir padrões que venham a facilitar o desenvolvimento de novas funcionalidades, de modo a manter uma certa consistência entre as mais variadas funcionalidades de uma aplicação.
+Tais padrões tendem podem ser úteis por exemplo ao adicionar um novo membro a equipe, que poderá ter sua vida facilitada para conseguir contribuir com um projeto já que toda funcionalidade possui mais ou menos a mesma forma.">
+    <meta name="author" content="José Caique">
+    <link rel="canonical" href="https://josecaique.com/pt-br/blog/pt-br/simples/">
+
+    <link rel="alternate" type="application/rss+xml" href="https://josecaique.com//index.xml" title="">
+
+    
+
+
+    <meta property="og:title" content="Matenha sua funcionalidade simples" />
+<meta property="og:description" content="Introdução Existe a tendência natural a buscar definir padrões que venham a facilitar o desenvolvimento de novas funcionalidades, de modo a manter uma certa consistência entre as mais variadas funcionalidades de uma aplicação.
+Tais padrões tendem podem ser úteis por exemplo ao adicionar um novo membro a equipe, que poderá ter sua vida facilitada para conseguir contribuir com um projeto já que toda funcionalidade possui mais ou menos a mesma forma." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://josecaique.com/pt-br/blog/pt-br/simples/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2023-04-04T14:23:18+01:00" />
+<meta property="article:modified_time" content="2023-04-04T14:23:18+01:00" />
+
+
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Matenha sua funcionalidade simples"/>
+<meta name="twitter:description" content="Introdução Existe a tendência natural a buscar definir padrões que venham a facilitar o desenvolvimento de novas funcionalidades, de modo a manter uma certa consistência entre as mais variadas funcionalidades de uma aplicação.
+Tais padrões tendem podem ser úteis por exemplo ao adicionar um novo membro a equipe, que poderá ter sua vida facilitada para conseguir contribuir com um projeto já que toda funcionalidade possui mais ou menos a mesma forma."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Blogs",
+      "item": "https://josecaique.com/pt-br/blog/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Matenha sua funcionalidade simples",
+      "item": "https://josecaique.com/pt-br/blog/pt-br/simples/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Matenha sua funcionalidade simples",
+  "name": "Matenha sua funcionalidade simples",
+  "description": "Introdução Existe a tendência natural a buscar definir padrões que venham a facilitar o desenvolvimento de novas funcionalidades, de modo a manter uma certa consistência entre as mais variadas funcionalidades de uma aplicação.\nTais padrões tendem podem ser úteis por exemplo ao adicionar um novo membro a equipe, que poderá ter sua vida facilitada para conseguir contribuir com um projeto já que toda funcionalidade possui mais ou menos a mesma forma.",
+  "keywords": [
+    
+  ],
+  "articleBody": "Introdução Existe a tendência natural a buscar definir padrões que venham a facilitar o desenvolvimento de novas funcionalidades, de modo a manter uma certa consistência entre as mais variadas funcionalidades de uma aplicação.\nTais padrões tendem podem ser úteis por exemplo ao adicionar um novo membro a equipe, que poderá ter sua vida facilitada para conseguir contribuir com um projeto já que toda funcionalidade possui mais ou menos a mesma forma.\nEntretanto, é importante sempre pensar sobre a utilidade que um trecho de código adiciona ao projeto. Defender por exemplo que um certo pedaço de código existe apenas para manter um padrão entre todas as funcionalidades é furada.\nAo definir o comportamento entre fronteiras abre-se espaço para a geração complexidade. É muito comum que seja feito um abuso de interfaces com apenas uma implementação, ou uma busca, desnecessária, por criar abstrações sobre abstrações, com o objetivo de isolar e proteger o código contra possíveis mudanças no futuro. É comum ouvir, “esse mapeamento é para que o framework de serialização não passe por camadas de dados até a apresentação” e dessa forma tenta evitar uma débito que talvez não venha sequer a existir no futuro.\nVale lembrar que funcionalidades passam por mudanças, adicionam novos comportamentos e inevitavelmente vão quebram padrões adicionados precocemente, com isso, o padrão que deveria ajudar no futuro, gera um stress no presente por tornar qualquer alteração muito lenta ou complexa de ser feita.\nVamos a um exemplo Supona a seguinte estrutura básica para exibir uma lista para um usuário.\n// module/subproject -- feature-list-characters --- domain --- data --- presentation O código dentro desse módulo ou subprojeto resolve um problema bem específico e há uma proximidade entre as três camadas apresentadas, já que partes do sistema que são alteradas em conjunto devem estar próximas. As camadas data, domain e presentation fazem parte da mesma fronteira, de modo que a comunicação entre tais camadas deve ser realizada de forma simples.\nA seguir um exemplo de abstração a ser repensada se gera algum valor.\ninternal interface RickAndMortyService { suspend fun listCharacters(): List } internal class RickAndMortyInfraStructure @Inject constructor( private val gateway: RickAndMortyGateway ) : RickAndMortyService { override suspend fun listCharacters(): List = gateway.getCharacters().results } internal class RickAndMortyViewModel @Inject constructor( private val service: RickAndMortyService ) : ViewModel() { ... } Deletar a interface acima não vai gerar nenhuma diferença? Não.\nEssa interface faz parte apenas de uma única funcionalidade e não será utilizada em nenhuma outra parte do projeto Nunca haverá uma segunda implementação dessa interface Criar uma abstração na mesma fronteira, para um código que sempre será alterado em conjunto não traz muito valor. Vale pensar e associar que, sempre que é alterado o RickAndMortyViewModel a interface RickAndMortyService tende a sofrer alterações sempre que os dados providos mudarem ou se novos comportamentos forem adicionados, por exemplo, deletar um personagem a interface forçadamente seria alterada.\nVale pensar então no benefício que tal interface provê, no fim não há motivos para ser complexo, uma vez que essas partes da mesma funcionalidade possuem um acoplamento natural (ao se alterar o RickAndMortyViewModel tende-se a alterar a RickAndMortyInfraStructure também) e tudo bem.\nDefender o uso da interface como um facilitador para criação de teste não faz tanto sentido, uma vez que ao RickAndMortyGateway pode ser substituída por um fake e os testes vão terminar exercitando mais partes do código ao se evitar o mock da classe RickAndMortyInfraStructure.\nMock vs Fake pode ser um assunto para outro momento. Você pode olhar aqui sobre o assunto.\nPara simplificar desenvolvimento, ao invés de buscar por padrões já definidos, é interessante pensar no potencial uso dessa funcionalidade. Se o que está prestes a ser desenvolvido é algo que será isolado de todo o sistema, há um espaço para ser objetivo e simples.\nPor exemplo, qual o ganho em fazer mapeamento de um Data transfer object para uma data class sem anotações que no fim será uma listagem simples na tela do usuário? Nenhum. O que se ganha com tal mapeamento é a falta de produtividade em prol de uma padronização que não leva a nada já que se trata de uma parte do sistema naturalmente isolada.\nAo simplificar temos espaço para remover o que for desnecessário. Pode-se considerar uma deleção de código em casos como:\nChecar interfaces com uma única implementação (pode ser um indicativo para remoção) Remover mapeamentos que servem simplesmente para remover anotações de serialização de classes. Um mapeamento quando se é útil tende a possuir validações que diminuem cenários de erros em que a aplicação poderá passar. O tal do usecase\nQuando ser complexo Quando uma funcionalidade toca diversas partes de um sistema, criar boas abstrações visa proteger a aplicação contra estados de erro não mapeados. Tais funcionalidades costumam fazer parte do núcleo do sistema e devem abusar da quantidade de validações e regras dado o impacto que podem causar em todo software.\nUm exemplo bem simples é a representação de documento do usuário feito através de um tipo primitivo como long.\nval document: Long Não há nenhuma validação do documento que venha a ser passado, nenhuma regra pode ser aplicada para proteger as partes do sistema que venham a fazer uso dessa informação.\ndata class Document(private val value : Long) { init { if(isValid().not()) throw ExceptionInInitializerError(\"invalid document\") } private fun isValid() = value.toString().length == 9 fun get() = value } Com a validação acima é garantido que todo o sistema sempre usará um documento válido, caso contrário o sistema não é inicializado.\nComplexidade aqui significa definições bem feitas em prol de regras claras sobre o funcionamento de uma funcionalidade utilizada em partes diversas da aplicação.\nUm outro bom exemplo é a sessão de um usuário, de modo geral com a evolução de um produto novas condições são adicionadas para validar se um usuário é válido, ou se a autentição ainda é válida. Porém de modo geral a interface não sofre muita alteração\ninterface Session { fun getUser(): User fun login(params: UserCredentials) fun logout() } Independente do detalhe da implementação há pouco espaço para breaking changes e todas as funcionalidades que dependam da sessão dificilmente serão impactadas pelas mudanças internas de tal classe.\nPara definir uma boa fronteira deve-se entender o impacto a ser gerado pelo código e o quão isolada aquela funcionalidade vai ser. Quando se há muita interação entre funcionalidades diferentes, vale definir de forma clara e com boas validações como funciona um contrato. Foque em ser coeso.\nPadrões não úteis surgem como uma boa intenção, quem cria costuma pensar em simplificar o dia a dia. Isso é bem comum quando em aplicações em seu começo, por pensar que com todos os códigos seguindo a mesma estrutura isso tornará mais simples para ajudar por exemplo a entender o código do colega de trabalho ao lado.\nTal prerrogativa tem um problema, quando os sistemas crescem a realidade é que a equipe vai trabalhar isoladamente em seu pedaço de software. Essa parte da equipe entenderá de um complexo número de regras de negócio daquela funcionalidade, isso torna humanamente impossível que o mesmo desenvolvedor consiga, via de regra, contribuir com outras funcionalidades simplesmente porque a forma como o código está escrito é parecido em toda a aplicação.\nEntão apesar de a intenção ser boa, quando em grande escala tais definições podem virar apenas dor de cabeça, gerar lentidão no desenvolvimento e causar problemas na adaptação de desenvolvedores a um estilo de código diferente uma vez que não há um ganho claro ao se seguir certos padrões.\nEntão evite prever tanto o futuro, mantenha seu código simples sempre que possível.\n",
+  "wordCount" : "1252",
+  "inLanguage": "pt-br",
+  "datePublished": "2023-04-04T14:23:18+01:00",
+  "dateModified": "2023-04-04T14:23:18+01:00",
+  "author":{
+    "@type": "Person",
+    "name": "José Caique"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://josecaique.com/pt-br/blog/pt-br/simples/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://josecaique.com/favicon.ico"
+    }
+  }
+}
+</script>
+    <link rel="icon" href="/favicon.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="/favicon.png">
+
+<link rel="manifest" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="https://cdn.staticfile.org/lxgw-wenkai-webfont/1.6.0/style.css" />
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/main.min.ff1bc260fafbfb440e10194d7d06d57eb5e85eed11d12d06255581262664204e.css" integrity="sha256-/xvCYPr7&#43;0QOEBlNfQbVfrXoXu0R0S0GJVWBJiZkIE4=" crossorigin="anonymous" media="screen" />
+    
+
+
+    
+    <link rel="stylesheet" href="/scss/highlight/github-dark.min.min.66034289ee9a113219a2c4aae0a8bd2095ab255c832a42efcf5863f10814e7a1.css" />
+
+    
+    <script src="/js/highlight.min.min.894ca9c68afab956438c4926a0dc7f5293e04e08595bd27abdb123e94801f684.js"></script>
+    <script>hljs.highlightAll();</script>
+
+    <script>(()=>{var t=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,e=localStorage.getItem("theme");t&&e===null&&(localStorage.setItem("theme","dark"),document.documentElement.setAttribute("data-dark-mode","")),t&&e==="dark"&&document.documentElement.setAttribute("data-dark-mode",""),e==="dark"&&document.documentElement.setAttribute("data-dark-mode","")})()</script>
+    </head>
+<body>
+      <main class="wrapper"><nav class="navigation">
+    <section class="container">
+        <a class="navigation-brand" href="/pt-br">
+            Início
+        </a>
+        <input type="checkbox" id="menu-toggle" />
+        <label class="menu-button float-right" for="menu-toggle">
+            <span></span><span></span><span></span>
+        </label>
+        
+        <ul class="navigation-list" id="navigation-list">
+            
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/pt-br/blog">Postagens</a>
+            </li>
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/pt-br/video">Vídeos</a>
+            </li>
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/pt-br/about">Sobre</a>
+            </li>
+            
+            
+
+            <li class="navigation-item menu-separator">
+                <span>|</span>
+            </li>
+
+            
+            
+            <li class="navigation-item navigation-social">
+                <a class="navigation-link" href="https://github.com/jcaiqueoliveira"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a>
+            </li>
+            
+            <li class="navigation-item navigation-social">
+                <a class="navigation-link" href="mailto:jcaique.jc@gmail.com"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></a>
+            </li>
+            
+            <li class="navigation-item navigation-social">
+                <a class="navigation-link" href="https://www.linkedin.com/in/kandadev/"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-linkedin"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
+            </li>
+            
+            
+
+            <li class="navigation-item navigation-dark">
+                <button id="mode" type="button" aria-label="toggle user light or dark theme">
+                    <span class="toggle-dark"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></span>
+                    <span class="toggle-light"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></span>
+                </button>
+            </li>
+
+            
+            
+            
+            
+            
+            <li class="navigation-item navigation-language">
+                <a href="https://josecaique.com/">🇬🇧</a>
+            </li>
+            
+            
+            
+            
+            
+            
+        </ul>
+        
+    </section>
+</nav>
+<div id="content">
+<article class="blog-single">
+  <header class="blog-title">
+    <h1>Matenha sua funcionalidade simples</h1>
+  </header>
+
+  <p>
+  <small>
+    4 de abril de 2023&nbsp;· 1252 palavras&nbsp;· 6 minutos</small>
+
+  
+<p>
+
+  <div class="blog-toc">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#introdução">Introdução</a>
+      <ul>
+        <li><a href="#vamos-a-um-exemplo">Vamos a um exemplo</a></li>
+      </ul>
+    </li>
+    <li><a href="#quando-ser-complexo">Quando ser complexo</a></li>
+  </ul>
+</nav>
+  </div>
+
+  <section class="blog-content"><h2 id="introdução">Introdução</h2>
+<p>Existe a tendência natural a buscar definir padrões que venham a facilitar o desenvolvimento de novas funcionalidades, de modo a manter uma certa consistência entre as mais variadas funcionalidades de uma aplicação.</p>
+<p>Tais padrões tendem podem ser úteis por exemplo ao adicionar um novo membro a equipe, que poderá ter sua vida facilitada para conseguir contribuir com um projeto já que toda funcionalidade possui mais ou menos a mesma forma.</p>
+<p>Entretanto, é importante sempre pensar sobre a utilidade que um trecho de código adiciona ao projeto. Defender por exemplo que um certo pedaço de código existe apenas para manter um padrão entre todas as funcionalidades é furada.</p>
+<p>Ao definir o comportamento entre fronteiras abre-se espaço para a geração complexidade. É muito comum que seja feito um abuso de interfaces com apenas uma implementação, ou uma busca, desnecessária, por criar abstrações sobre abstrações, com o objetivo de isolar e proteger o código contra possíveis mudanças no futuro. É comum ouvir, “esse mapeamento é para que o framework de serialização não passe por camadas de dados até a apresentação” e dessa forma tenta evitar uma débito que talvez não venha sequer a existir no futuro.</p>
+<p>Vale lembrar que funcionalidades passam por mudanças, adicionam novos comportamentos e inevitavelmente vão quebram padrões adicionados precocemente, com isso, o padrão que deveria ajudar no futuro, gera um stress no presente por tornar qualquer alteração muito lenta ou complexa de ser feita.</p>
+<h3 id="vamos-a-um-exemplo">Vamos a um exemplo</h3>
+<p>Supona a seguinte estrutura básica para exibir uma lista para um usuário.</p>
+<pre tabindex="0"><code>// module/subproject
+-- feature-list-characters
+--- domain
+--- data
+--- presentation
+</code></pre><p>O código dentro desse módulo ou subprojeto resolve um problema bem específico e há uma proximidade entre as três camadas apresentadas, já que partes do sistema que são alteradas em conjunto devem estar próximas.
+As camadas data, domain e presentation fazem parte da mesma fronteira, de modo que a comunicação entre tais camadas deve ser realizada de forma simples.</p>
+<p>A seguir um exemplo de abstração a ser repensada se gera algum valor.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">internal</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">RickAndMortyService</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">suspend</span> <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">listCharacters</span>(): List&lt;Character&gt;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">internal</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RickAndMortyInfraStructure</span> <span style="color:#a6e22e">@Inject</span> <span style="color:#66d9ef">constructor</span>(
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">val</span> gateway: RickAndMortyGateway
+</span></span><span style="display:flex;"><span>) : RickAndMortyService {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">suspend</span> <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">listCharacters</span>(): List&lt;Character&gt; = gateway.getCharacters().results
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">internal</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RickAndMortyViewModel</span> <span style="color:#a6e22e">@Inject</span> <span style="color:#66d9ef">constructor</span>(
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">val</span> service: RickAndMortyService
+</span></span><span style="display:flex;"><span>) : ViewModel() {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">..</span>.
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>Deletar</strong> a interface acima não vai gerar nenhuma diferença? Não.</p>
+<ul>
+<li>Essa interface faz parte apenas de uma única funcionalidade e não será utilizada em nenhuma outra parte do projeto</li>
+<li>Nunca haverá uma segunda implementação dessa interface</li>
+</ul>
+<p>Criar uma abstração na mesma fronteira, para um código que sempre será alterado em conjunto não traz muito valor. Vale pensar e associar que, sempre que é alterado o <em>RickAndMortyViewModel</em> a interface <em>RickAndMortyService</em> tende a sofrer alterações sempre que os dados providos mudarem ou se novos comportamentos forem adicionados, por exemplo, deletar um personagem a interface forçadamente seria alterada.</p>
+<p>Vale pensar então no benefício que tal interface provê, no fim não há motivos para ser complexo, uma vez que essas partes da mesma funcionalidade possuem um acoplamento natural (ao se alterar o <em>RickAndMortyViewModel</em> tende-se a alterar a RickAndMortyInfraStructure também) e tudo bem.</p>
+<p>Defender o uso da interface como um facilitador para criação de teste não faz tanto sentido, uma vez que ao <em>RickAndMortyGateway</em> pode ser substituída por um fake e os testes vão terminar exercitando mais partes do código ao se evitar o mock da classe <em>RickAndMortyInfraStructure</em>.</p>
+<p>Mock vs Fake pode ser um assunto para outro momento. Você pode olhar aqui sobre o assunto.</p>
+<p>Para simplificar desenvolvimento, ao invés de buscar por padrões já definidos, é interessante pensar no potencial uso dessa funcionalidade. Se o que está prestes a ser desenvolvido é algo que será isolado de todo o sistema, há um espaço para ser objetivo e simples.</p>
+<p>Por exemplo, qual o ganho em fazer mapeamento de um Data transfer object para uma data class sem anotações que no fim será uma listagem simples na tela do usuário? Nenhum. O que se ganha com tal mapeamento é a falta de produtividade em prol de uma padronização que não leva a nada já que se trata de uma parte do sistema naturalmente isolada.</p>
+<p>Ao simplificar temos espaço para remover o que for desnecessário. Pode-se considerar uma deleção de código em casos como:</p>
+<p>Checar interfaces com uma única implementação (pode ser um indicativo para remoção)
+Remover mapeamentos que servem simplesmente para remover anotações de serialização de classes. Um mapeamento quando se é útil tende a possuir validações que diminuem cenários de erros em que a aplicação poderá passar.
+O tal do <em>usecase</em></p>
+<h2 id="quando-ser-complexo">Quando ser complexo</h2>
+<p>Quando uma funcionalidade toca diversas partes de um sistema, criar boas abstrações visa proteger a aplicação contra estados de erro não mapeados. Tais funcionalidades costumam fazer parte do núcleo do sistema e devem abusar da quantidade de validações e regras dado o impacto que podem causar em todo software.</p>
+<p>Um exemplo bem simples é a representação de documento do usuário feito através de um tipo primitivo como long.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">val</span> document: Long
+</span></span></code></pre></div><p>Não há nenhuma validação do documento que venha a ser passado, nenhuma regra pode ser aplicada para proteger as partes do sistema que venham a fazer uso dessa informação.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">data</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Document</span>(<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">val</span> value : Long) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">init</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span>(isValid().not()) <span style="color:#66d9ef">throw</span> ExceptionInInitializerError(<span style="color:#e6db74">&#34;invalid document&#34;</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">isValid</span>() = <span style="color:#66d9ef">value</span>.toString().length <span style="color:#f92672">==</span> <span style="color:#ae81ff">9</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">get</span>() = <span style="color:#66d9ef">value</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Com a validação acima é garantido que todo o sistema sempre usará um documento válido, caso contrário o sistema não é inicializado.</p>
+<p>Complexidade aqui significa definições bem feitas em prol de regras claras sobre o funcionamento de uma funcionalidade utilizada em partes diversas da aplicação.</p>
+<p>Um outro bom exemplo é a sessão de um usuário, de modo geral com a evolução de um produto novas condições são adicionadas para validar se um usuário é válido, ou se a autentição ainda é válida. Porém de modo geral a interface não sofre muita alteração</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Session</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">getUser</span>(): User
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">login</span>(params: UserCredentials)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">logout</span>()
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Independente do detalhe da implementação há pouco espaço para breaking changes e todas as
+funcionalidades que dependam da sessão dificilmente serão impactadas pelas mudanças internas de tal classe.</p>
+<p><strong>Para definir uma boa fronteira</strong> deve-se entender o impacto a ser gerado pelo código e o quão isolada aquela funcionalidade vai ser. Quando se há muita interação entre funcionalidades diferentes, vale definir de forma clara e com boas validações como funciona um contrato. Foque em ser coeso.</p>
+<p><strong>Padrões não úteis surgem</strong> como uma boa intenção, quem cria costuma pensar em simplificar o dia a dia. Isso é bem comum quando em aplicações em seu começo, por pensar que com todos os códigos seguindo a mesma estrutura isso tornará mais simples para ajudar por exemplo a entender o código do colega de trabalho ao lado.</p>
+<p>Tal prerrogativa tem um problema, quando os sistemas crescem a realidade é que a equipe vai trabalhar isoladamente em seu pedaço de software. Essa parte da equipe entenderá de um complexo número de regras de negócio daquela funcionalidade, isso torna humanamente impossível que o mesmo desenvolvedor consiga, via de regra, contribuir com outras funcionalidades simplesmente porque a forma como o código está escrito é parecido em toda a aplicação.</p>
+<p>Então apesar de a intenção ser boa, quando em grande escala tais definições podem virar apenas dor de cabeça, gerar lentidão no desenvolvimento e causar problemas na adaptação de desenvolvedores a um estilo de código diferente uma vez que não há um ganho claro ao se seguir certos padrões.</p>
+<p>Então evite prever tanto o futuro, mantenha seu código simples sempre que possível.</p>
+</section>
+
+  
+  
+
+  
+
+
+  
+  
+</article>
+
+
+        </div><footer class="footer">
+  <p>&copy; 2023 <a href="https://josecaique.com/"></a>
+    Powered by
+    <a href="https://gohugo.io/" rel="noopener" target="_blank">Hugo️️</a>
+    <a href="https://github.com/guangzhengli/hugo-theme-ladder" rel="noopener" target="_blank">Ladder</a>
+️  </p>
+</footer>
+
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10.5376 22.7916C11.0152 22.7207 22.5795 21.1781 22.0978 10.4211C22.0536 9.43274 21.9303 8.53367 21.7387 7.71865M10.5376 22.7916C16.876 22.3728 20.0969 19.8899 21.5383 16.9142M10.5376 22.7916C9.7707 22.9055 8.97982 22.8964 8.19743 22.7725M21.7387 7.71865C21.4988 6.69828 21.1518 5.80967 20.7188 5.04257M21.7387 7.71865C22.6022 10.1105 23.0542 13.7848 21.5383 16.9142M20.7188 5.04257C17.1684 -1.24629 7.83127 0.632493 4.27577 5.04257C2.88063 6.77451 -0.0433281 11.1668 1.38159 16.6571C2.27481 20.0988 5.17269 22.2936 8.19743 22.7725M20.7188 5.04257C22.0697 6.9404 24.0299 11.3848 22.3541 15.4153M21.5383 16.9142C21.8737 16.4251 22.1428 15.9235 22.3541 15.4153M8.19743 22.7725C12.1971 23.4683 20.6281 22.971 22.3541 15.4153M14 10.945C13.3836 10.289 12.003 8.63215 11.2034 7.04814C11.1703 6.98257 11.0247 6.98456 10.9937 7.05061C10.5221 8.05496 9.07362 9.92941 8 10.945M11.0333 7.44444C10.9392 9.86549 11 15 12 17" stroke="currentColor" stroke-linecap="round"/>
+    </svg>
+</a>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'Copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'Copied';
+            setTimeout(() => {
+                copybutton.innerHTML = 'Copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+        codeblock.parentNode.appendChild(copybutton);
+    });
+</script></main>
+    </body>
+  
+  <script src="/main.min.6bb26b69159420159c74dc9e097b06a578ed2b68c701466a91a44a9632d851bd0af167a1b30012387b4c512b48ad9ad4d3394e04d77ae38d57e1920fe4ed34fe.js" integrity="sha512-a7JraRWUIBWcdNyeCXsGpXjtK2jHAUZqkaRKljLYUb0K8WehswASOHtMUStIrZrU0zlOBNd6441X4ZIP5O00/g==" crossorigin="anonymous" defer></script></html>
