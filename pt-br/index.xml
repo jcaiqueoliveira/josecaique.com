@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title></title>
-    <link>https://josecaique.com/</link>
+    <link>https://josecaique.com/pt-br/</link>
     <description>Recent content on </description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
+    <language>pt-br</language>
     <managingEditor>jcaique.jc@gmail.com (José Caique)</managingEditor>
     <webMaster>jcaique.jc@gmail.com (José Caique)</webMaster>
-    <lastBuildDate>Sun, 24 Dec 2023 14:20:55 +0100</lastBuildDate><atom:link href="https://josecaique.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 24 Dec 2023 14:23:18 +0100</lastBuildDate><atom:link href="https://josecaique.com/pt-br/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Test</title>
-      <link>https://josecaique.com/blog/test/</link>
-      <pubDate>Sun, 24 Dec 2023 14:20:55 +0100</pubDate>
+      <link>https://josecaique.com/pt-br/blog/pt-br/test/</link>
+      <pubDate>Sun, 24 Dec 2023 14:23:18 +0100</pubDate>
       <author>jcaique.jc@gmail.com (José Caique)</author>
-      <guid>https://josecaique.com/blog/test/</guid>
-      <description>&lt;p&gt;aaaa&lt;/p&gt;
+      <guid>https://josecaique.com/pt-br/blog/pt-br/test/</guid>
+      <description>&lt;p&gt;um blog post&lt;/p&gt;
 </description>
     </item>
     
