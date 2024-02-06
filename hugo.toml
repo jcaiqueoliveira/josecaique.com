@@ -10,7 +10,7 @@ disableHugoGeneratorInject = false
 enableEmoji = true
 
 [params]
-ava = "/img/logojc.png"
+ava = "/img/cat.png"
 owner ="Product mobile engineer"
 talk = ""
 blogSection = ["blog"]
