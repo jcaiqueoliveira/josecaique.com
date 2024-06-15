@@ -1,9 +1,15 @@
 .footer {
-    padding-top: 20px;
+    padding-top: 10px;
     text-align: center;
     font-size: 15px;
-    padding-bottom: 20px;
+    padding-bottom: 10px;
 }
-.footer p {
-    line-height: 10px;
-} 
+
+footer ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}  
+footer li {
+    display: inline;
+}

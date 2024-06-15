@@ -1,4 +1,10 @@
-<footer class="footer">
-    <p><a href="https://gohugo.io">Hugo Cat</a></p>
-    <p>Forkme on <a href="https://github.com/httpsecure/hugo-cat">Github</a></p>
+<footer class="header">
+    <div class="cat">
+
+        <ul class="header-link">
+          {{ range .Site.Menus.main }}
+          <li><a class="link" href="{{ .URL | safeURL }}">{{ .Name | htmlEscape }}</a></li>
+          {{ end }}
+        </ul>
+      </div>
 </footer>
