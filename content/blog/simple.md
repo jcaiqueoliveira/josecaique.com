@@ -3,7 +3,6 @@ title: "Keep your feature simple"
 date: 2023-04-04
 draft: false
 description: ""
-image: "/img/mawar.png"
 ---
 
 Introduction
