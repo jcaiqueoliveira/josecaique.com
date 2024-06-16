@@ -13,7 +13,7 @@ ava = "/img/cat.png"
 owner ="Product mobile engineer"
 talk = ""
 blogSection = ["blog"]
-description = "José caique"
+description = "José Caique"
 favicon = "/img/favicon.ico"
 
 [[menu.main]]
