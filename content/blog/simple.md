@@ -3,7 +3,6 @@ title: "Keep your feature simple"
 date: 2023-04-04
 draft: false
 description: ""
-image: "/img/mawar.png"
 ---
 
 Introduction
@@ -17,13 +16,16 @@ It’s important to remember that functionalities undergo changes, add new behav
 
 Let’s look at an example
 Consider the following basic structure to display a list to a user.
+
 ```
+
 // module/subproject
 -- feature-list-characters
 --- domain
 --- data
 --- presentation
 ```
+
 The code within this module or subproject solves a very specific problem, and there is proximity between the three presented layers since parts of the system that are changed together should be close. The data, domain, and presentation layers are part of the same boundary, so communication between these layers should be simple.
 
 Here’s an example of an abstraction that should be reconsidered if it generates any value.

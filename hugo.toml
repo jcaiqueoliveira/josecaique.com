@@ -18,9 +18,16 @@ description = "José caique"
 favicon = "/img/favicon.ico"
 
 [[menu.main]]
-name = "About"
-url = "/contact/"
-weight = 3
+name = "Github"
+url = "https://www.github.com/jcaiqueoliveira"
+identifier = "/img/github.svg"
+weight = 2
+
+[[menu.main]]
+name = "Linkedin"
+url = "https://www.linkedin.com/in/kandadev/"
+identifier = "/img/linkedin.svg"
+weight = 1
 
 [module]
   [module.hugoVersion]

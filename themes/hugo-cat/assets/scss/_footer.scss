@@ -11,5 +11,10 @@ footer ul {
     padding: 0;
 }  
 footer li {
-    display: inline;
+    display: inline-block;
+    margin-right: 8px;
+}
+
+.social {
+    color: red;
 }
