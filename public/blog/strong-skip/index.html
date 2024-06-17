@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="José Caique">
+    <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
+    
+    <link rel="stylesheet" href="/css/style.min.4ef5006ef94036c1099b270ba0832228ac89e9bc5489f5daa9b6cee19f15e092a6c60ce32a897a02af9b48306d467c7c2ec1080f0b0ddbf8e31dea0e4da86996.css" integrity="sha512-TvUAbvlANsEJmycLoIMiKKyJ6bxUifXaqbbO4Z8V4JKmxgzjKol6Aq&#43;bSDBtRnx8LsEIDwsN2/jjHeoOTahplg==" crossorigin="anonymous"> 
+    
+
+</head>
+
+<title>
+    
+     Strong skipping mode by default | José Caique
+   
+</title> 
+
+<body> 
+<header>
+     <div class="cat">
+      <h1><a href="">José Caique</a></h1>
+    </div>
+</header>
+<div id="content">
+
+<div class="container">
+		<article>
+			<h1 class="head-blog">Strong skipping mode by default</h1>
+			<div class="time">Jun 16, 2024</div>
+			<div class="content-blog">
+				<p>Recent updates from compose introduced compose strong skipping mode, which makes the compose much more efficient to deal with recomposition. Let&rsquo;s validate it with a simple example.</p>
+<p>The most easy way to force recomposition it&rsquo;s passing a List as a parameter to some compose function as follows:</p>
+<div class="highlight"><pre tabindex="0" style="color:#8a8a8a;background-color:#1c1c1c;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#0087ff">@Composable</span>
+</span></span><span style="display:flex;"><span><span style="color:#5f8700">fun</span> <span style="color:#0087ff">Listing</span>(values: List&lt;String&gt;) {
+</span></span><span style="display:flex;"><span>    Column {
+</span></span><span style="display:flex;"><span>        values.forEach {
+</span></span><span style="display:flex;"><span>            Text(text = <span style="color:#5f8700">it</span>)
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Every time that some recomposition happens this function will recompose. Before strong skipping mode there was 2 common approach to deal with it.</p>
+<p>The first one was to start using <a href="https://github.com/Kotlin/kotlinx.collections.immutable">Kotlin Immutables</a> library and then use ImmutableList instead of passing List as a parameter. This is straightforward manner to solve extra undesired recomposition.</p>
+<div class="highlight"><pre tabindex="0" style="color:#8a8a8a;background-color:#1c1c1c;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#0087ff">@Composable</span>
+</span></span><span style="display:flex;"><span><span style="color:#5f8700">fun</span> <span style="color:#0087ff">Listing</span>(values: Immutable&lt;String&gt;) {
+</span></span><span style="display:flex;"><span>    Column {
+</span></span><span style="display:flex;"><span>        values.forEach {
+</span></span><span style="display:flex;"><span>            Text(text = <span style="color:#5f8700">it</span>)
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>The second manner to solve it, was to basically wrap the list inside another class and mark it as Immutable</p>
+<div class="highlight"><pre tabindex="0" style="color:#8a8a8a;background-color:#1c1c1c;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#0087ff">@Immutable</span>
+</span></span><span style="display:flex;"><span><span style="color:#5f8700">data</span> <span style="color:#5f8700">class</span> <span style="color:#0087ff">MyWrapper</span>(
+</span></span><span style="display:flex;"><span>    <span style="color:#5f8700">val</span> list: List&lt;String&gt;
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0087ff">@Composable</span>
+</span></span><span style="display:flex;"><span><span style="color:#5f8700">fun</span> <span style="color:#0087ff">Listing</span>(item: MyWrapper) {
+</span></span><span style="display:flex;"><span>    Column {
+</span></span><span style="display:flex;"><span>        item.list.forEach {
+</span></span><span style="display:flex;"><span>            Text(text = <span style="color:#5f8700">it</span>)
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Both fixes are simple, but you need to make sure that all team members are aware about recomposition and then guarantee the usage of the chosen solution.</p>
+<p>Strong skipping made it easy, since compose 1.6 it comes enabled by default, you can control it via gradle:</p>
+<div class="highlight"><pre tabindex="0" style="color:#8a8a8a;background-color:#1c1c1c;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span>composeCompiler {
+</span></span><span style="display:flex;"><span>    enableStrongSkippingMode = <span style="color:#5f8700">true</span>/<span style="color:#5f8700">false</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    reportsDestination = layout.buildDirectory.dir(<span style="color:#00afaf">&#34;compose_compiler&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>The reports destination it&rsquo;s useful to read about the stability of your compose functions</p>
+<p>Following up with an example, let&rsquo;s do some tests with a simple screen:</p>
+<div class="highlight"><pre tabindex="0" style="color:#8a8a8a;background-color:#1c1c1c;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span>  StrongTheme {
+</span></span><span style="display:flex;"><span>    <span style="color:#5f8700">var</span> check <span style="color:#5f8700">by</span> remember { mutableStateOf(<span style="color:#5f8700">false</span>) }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#5f8700">val</span> color <span style="color:#5f8700">by</span> animateColorAsState(
+</span></span><span style="display:flex;"><span>        label = <span style="color:#00afaf">&#34;ColorAnimation&#34;</span>,
+</span></span><span style="display:flex;"><span>        targetValue = <span style="color:#5f8700">if</span> (check) <span style="color:#0087ff">Color</span>.White <span style="color:#5f8700">else</span> <span style="color:#0087ff">Color</span>.Cyan
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    Scaffold(
+</span></span><span style="display:flex;"><span>        containerColor = color,
+</span></span><span style="display:flex;"><span>        modifier = <span style="color:#0087ff">Modifier</span>.fillMaxSize()
+</span></span><span style="display:flex;"><span>    ) { innerPadding -&gt;
+</span></span><span style="display:flex;"><span>        Column {
+</span></span><span style="display:flex;"><span>            Greeting(
+</span></span><span style="display:flex;"><span>                name = <span style="color:#00afaf">&#34;Android&#34;</span>,
+</span></span><span style="display:flex;"><span>                modifier = <span style="color:#0087ff">Modifier</span>.padding(innerPadding)
+</span></span><span style="display:flex;"><span>            )
+</span></span><span style="display:flex;"><span>            Switch(
+</span></span><span style="display:flex;"><span>                checked = check,
+</span></span><span style="display:flex;"><span>                onCheckedChange = {
+</span></span><span style="display:flex;"><span>                    check = <span style="color:#5f8700">it</span>
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            )
+</span></span><span style="display:flex;"><span>            Listing(values = listOf(<span style="color:#00afaf">&#34;Dogs&#34;</span>,<span style="color:#00afaf">&#34;Cats&#34;</span>,<span style="color:#00afaf">&#34;Birds&#34;</span>))
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>We have some extras recomposition because of the animations added via animated*AsState. Every time the Switch changes the Listing recompose 6 times, even without any changes in the content. (To get this number I&rsquo;m using layout inspector with recompose count enabled)</p>
+<pre tabindex="0"><code class="language-Plain-text" data-lang="Plain-text">Recomposition 
+count: 6
+Skips: 0
+</code></pre><p>Let&rsquo;s run with strong skipping enabled:
+By switching the switch between checked and unchecked, layout inspector shows that the Listing was skipped all the time with 0 recomposition (expected behavior).</p>
+<pre tabindex="0"><code class="language-Plain-text" data-lang="Plain-text">Recomposition 
+count: 0
+skips: 8
+</code></pre><p>It&rsquo;s good to see that the tooling from compose its evolving a lot, it can make it easy to adopt in complex screens without introducing performance issues.</p>
+
+			</div>
+
+		</article>
+	</div>
+	<div class="blog container">
+<ul class="article-list">
+    
+	
+
+	
+<li class="post">      
+    <span>Feb 5, 2024 </span> 
+    <a class="blog-title" href="/blog/roadmap/">Roadmap android</a>
+</li>
+
+
+	
+<li class="post">      
+    <span>Apr 4, 2023 </span> 
+    <a class="blog-title" href="/blog/simple/">Keep your feature simple</a>
+</li>
+
+
+ </ul>
+</div>
+
+
+</div>
+<footer class="footer">
+    <div>
+        <ul>
+          
+          <li>
+            <a class="link" target="_blank" href="https://www.linkedin.com/in/kandadev/">
+               <img width="32px" height="32px" class="social" src="/img/linkedin.svg"/>
+            </a>
+         </li>
+          
+          <li>
+            <a class="link" target="_blank" href="https://www.github.com/jcaiqueoliveira">
+               <img width="32px" height="32px" class="social" src="/img/github.svg"/>
+            </a>
+         </li>
+          
+        </ul>
+      </div>
+</footer>
+
+
+</body>
+</html>
