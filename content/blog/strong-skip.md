@@ -114,4 +114,14 @@ count: 0
 skips: 8
 ```
 
-It's good to see that the tooling from compose its evolving a lot, it can make it easy to adopt in complex screens without introducing performance issues.
+If we look into buil/compose_compiler folder added in the gradle configuration we will see the following report:
+
+```kotlin
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Listing(
+  stable values: List<String>
+)
+```
+
+The report is the same with strong skipping enabled or disabled, which means that the evaluations process to mark as stable, restartable remains the same. So with strong skipping enabled, all restartable composable functions will be skippable, regardless of if they have unstable parameters or not. Non-restartable composable functions remain unskippable.
+
+To conclude, it's good to see that the tooling from compose its evolving a lot, it can make it easy to adopt in complex screens without introducing performance issues, at the same time that we do not need to worry about small details focusing on getting things done.

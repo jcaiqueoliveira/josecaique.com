@@ -110,7 +110,12 @@ By switching the switch between checked and unchecked, layout inspector shows th
 <pre tabindex="0"><code class="language-Plain-text" data-lang="Plain-text">Recomposition 
 count: 0
 skips: 8
-</code></pre><p>It&rsquo;s good to see that the tooling from compose its evolving a lot, it can make it easy to adopt in complex screens without introducing performance issues.</p>
+</code></pre><p>If we look into buil/compose_compiler folder added in the gradle configuration we will see the following report:</p>
+<div class="highlight"><pre tabindex="0" style="color:#8a8a8a;background-color:#1c1c1c;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span>restartable skippable scheme(<span style="color:#00afaf">&#34;[androidx.compose.ui.UiComposable]&#34;</span>) <span style="color:#5f8700">fun</span> <span style="color:#0087ff">Listing</span>(
+</span></span><span style="display:flex;"><span>  stable values: List&lt;String&gt;
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><p>The report is the same with strong skipping enabled or disabled, which means that the evaluations process to mark as stable, restartable remains the same. So with strong skipping enabled, all restartable composable functions will be skippable, regardless of if they have unstable parameters or not. Non-restartable composable functions remain unskippable.</p>
+<p>To conclude, it&rsquo;s good to see that the tooling from compose its evolving a lot, it can make it easy to adopt in complex screens without introducing performance issues, at the same time that we do not need to worry about small details focusing on getting things done.</p>
 
 			</div>
 
