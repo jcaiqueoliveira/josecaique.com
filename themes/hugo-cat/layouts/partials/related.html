@@ -3,7 +3,7 @@
     {{ range (where .Site.RegularPages "Type" "in" .Site.Params.blogSection ) }}
 	{{ if ne .Permalink $.Permalink }}
 <li class="post">      
-    <span>{{ dateFormat "Jan 2, 2006" .Date }} </span> 
+    <span>{{ dateFormat "Jan 02, 2006" .Date }} </span> 
     <a class="blog-title" href="{{ .RelPermalink | safeURL }}">{{.Title | htmlEscape }}</a>
 </li>
 {{ end }}

@@ -13,14 +13,14 @@
       <link>/blog/strong-skip/</link>
       <pubDate>Sun, 16 Jun 2024 11:53:01 -0300</pubDate>
       <guid>/blog/strong-skip/</guid>
-      <description>Recent updates from compose introduced compose strong skipping mode, which makes the compose much more efficient to deal with recomposition. Let&amp;rsquo;s validate it with a simple example.&#xA;The most easy way to force recomposition it&amp;rsquo;s passing a List as a parameter to some compose function as follows:&#xA;@Composable fun Listing(values: List&amp;lt;String&amp;gt;) { Column { values.forEach { Text(text = it) } } } Every time that some recomposition happens this function will recompose.</description>
+      <description>Recent updates from compose introduced compose strong skipping mode, which makes compose much more efficient to deal with recomposition. Let&amp;rsquo;s validate it with a simple example.&#xA;The most easy way to force recomposition it&amp;rsquo;s passing a List as a parameter to some compose function as follows:&#xA;@Composable fun Listing(values: List&amp;lt;String&amp;gt;) { Column { values.forEach { Text(text = it) } } } Every time that some recomposition happens this function will recompose.</description>
     </item>
     <item>
       <title>Roadmap android</title>
       <link>/blog/roadmap/</link>
       <pubDate>Mon, 05 Feb 2024 00:00:00 +0000</pubDate>
       <guid>/blog/roadmap/</guid>
-      <description>As described in the youtube video here you can find the android roadmap. Try your best to get a solid understanding of what are you studing, so when the time pass you will for sure become a strong android dev. Fingers crossed!</description>
+      <description>As described in the YouTube video here you can find the android roadmap. Try your best to get a solid understanding of what are you studying, so when the time pass you will for sure become a strong android dev. Fingers crossed!</description>
     </item>
     <item>
       <title>Keep your feature simple</title>

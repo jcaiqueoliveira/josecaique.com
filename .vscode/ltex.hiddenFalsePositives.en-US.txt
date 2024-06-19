@@ -1,0 +1,1 @@
+{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QIt's worth thinking and associating that, whenever the RickAndMortyViewModel is changed, the RickAndMortyService interface tends to undergo changes whenever the provided data changes or new behaviors are added.\\E$"}

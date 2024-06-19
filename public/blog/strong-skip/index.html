@@ -31,7 +31,7 @@
 			<h1 class="head-blog">Strong skipping mode by default</h1>
 			<div class="time">Jun 16, 2024</div>
 			<div class="content-blog">
-				<p>Recent updates from compose introduced compose strong skipping mode, which makes the compose much more efficient to deal with recomposition. Let&rsquo;s validate it with a simple example.</p>
+				<p>Recent updates from compose introduced compose strong skipping mode, which makes compose much more efficient to deal with recomposition. Let&rsquo;s validate it with a simple example.</p>
 <p>The most easy way to force recomposition it&rsquo;s passing a List as a parameter to some compose function as follows:</p>
 <div class="highlight"><pre tabindex="0" style="color:#8a8a8a;background-color:#1c1c1c;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#0087ff">@Composable</span>
 </span></span><span style="display:flex;"><span><span style="color:#5f8700">fun</span> <span style="color:#0087ff">Listing</span>(values: List&lt;String&gt;) {
@@ -42,7 +42,7 @@
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>Every time that some recomposition happens this function will recompose. Before strong skipping mode there was 2 common approach to deal with it.</p>
-<p>The first one was to start using <a href="https://github.com/Kotlin/kotlinx.collections.immutable">Kotlin Immutables</a> library and then use ImmutableList instead of passing List as a parameter. This is straightforward manner to solve extra undesired recomposition.</p>
+<p>The first one was to start using <a href="https://github.com/Kotlin/kotlinx.collections.immutable">Kotlin Immutable</a> library and then use <em>ImmutableList</em> instead of passing List as a parameter. This is straightforward manner to solve extra undesired recomposition.</p>
 <div class="highlight"><pre tabindex="0" style="color:#8a8a8a;background-color:#1c1c1c;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#0087ff">@Composable</span>
 </span></span><span style="display:flex;"><span><span style="color:#5f8700">fun</span> <span style="color:#0087ff">Listing</span>(values: Immutable&lt;String&gt;) {
 </span></span><span style="display:flex;"><span>    Column {
@@ -72,7 +72,7 @@
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    reportsDestination = layout.buildDirectory.dir(<span style="color:#00afaf">&#34;compose_compiler&#34;</span>)
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>The reports destination it&rsquo;s useful to read about the stability of your compose functions</p>
+</span></span></code></pre></div><p><em>reportsDestination</em> destination it&rsquo;s useful to read about the stability of your compose functions</p>
 <p>Following up with an example, let&rsquo;s do some tests with a simple screen:</p>
 <div class="highlight"><pre tabindex="0" style="color:#8a8a8a;background-color:#1c1c1c;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span>  StrongTheme {
 </span></span><span style="display:flex;"><span>    <span style="color:#5f8700">var</span> check <span style="color:#5f8700">by</span> remember { mutableStateOf(<span style="color:#5f8700">false</span>) }
@@ -101,7 +101,7 @@
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>We have some extras recomposition because of the animations added via animated*AsState. Every time the Switch changes the Listing recompose 6 times, even without any changes in the content. (To get this number I&rsquo;m using layout inspector with recompose count enabled)</p>
+</span></span></code></pre></div><p>We have some extra recomposition because of the animations added via <em>animated</em>AsState*. Every time the Switch changes the Listing recompose 6 times, even without any changes in the content. (To get this number I&rsquo;m using layout inspector with recompose count enabled)</p>
 <pre tabindex="0"><code class="language-Plain-text" data-lang="Plain-text">Recomposition 
 count: 6
 Skips: 0
@@ -110,7 +110,7 @@ By switching the switch between checked and unchecked, layout inspector shows th
 <pre tabindex="0"><code class="language-Plain-text" data-lang="Plain-text">Recomposition 
 count: 0
 skips: 8
-</code></pre><p>If we look into buil/compose_compiler folder added in the gradle configuration we will see the following report:</p>
+</code></pre><p>If we look into <em>build/compose_compiler</em> folder added in the gradle configuration we will see the following report:</p>
 <div class="highlight"><pre tabindex="0" style="color:#8a8a8a;background-color:#1c1c1c;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span>restartable skippable scheme(<span style="color:#00afaf">&#34;[androidx.compose.ui.UiComposable]&#34;</span>) <span style="color:#5f8700">fun</span> <span style="color:#0087ff">Listing</span>(
 </span></span><span style="display:flex;"><span>  stable values: List&lt;String&gt;
 </span></span><span style="display:flex;"><span>)
@@ -128,14 +128,14 @@ skips: 8
 
 	
 <li class="post">      
-    <span>Feb 5, 2024 </span> 
+    <span>Feb 05, 2024 </span> 
     <a class="blog-title" href="/blog/roadmap/">Roadmap android</a>
 </li>
 
 
 	
 <li class="post">      
-    <span>Apr 4, 2023 </span> 
+    <span>Apr 04, 2023 </span> 
     <a class="blog-title" href="/blog/simple/">Keep your feature simple</a>
 </li>
 

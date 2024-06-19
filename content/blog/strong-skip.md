@@ -3,7 +3,7 @@ title = 'Strong skipping mode by default'
 date = 2024-06-16T11:53:01-03:00
 +++
 
-Recent updates from compose introduced compose strong skipping mode, which makes the compose much more efficient to deal with recomposition. Let's validate it with a simple example.
+Recent updates from compose introduced compose strong skipping mode, which makes compose much more efficient to deal with recomposition. Let's validate it with a simple example.
 
 The most easy way to force recomposition it's passing a List as a parameter to some compose function as follows:
 
@@ -20,7 +20,7 @@ fun Listing(values: List<String>) {
 
 Every time that some recomposition happens this function will recompose. Before strong skipping mode there was 2 common approach to deal with it.
 
-The first one was to start using [Kotlin Immutables](https://github.com/Kotlin/kotlinx.collections.immutable) library and then use ImmutableList instead of passing List as a parameter. This is straightforward manner to solve extra undesired recomposition.
+The first one was to start using [Kotlin Immutable](https://github.com/Kotlin/kotlinx.collections.immutable) library and then use *ImmutableList* instead of passing List as a parameter. This is straightforward manner to solve extra undesired recomposition.
 
 ```kotlin
 @Composable
@@ -63,7 +63,7 @@ composeCompiler {
 }
 ```
 
-The reports destination it's useful to read about the stability of your compose functions
+*reportsDestination* destination it's useful to read about the stability of your compose functions
 
 Following up with an example, let's do some tests with a simple screen:
 
@@ -97,7 +97,7 @@ Following up with an example, let's do some tests with a simple screen:
 }
 ```
 
-We have some extras recomposition because of the animations added via animated*AsState. Every time the Switch changes the Listing recompose 6 times, even without any changes in the content. (To get this number I'm using layout inspector with recompose count enabled)
+We have some extra recomposition because of the animations added via *animated*AsState*. Every time the Switch changes the Listing recompose 6 times, even without any changes in the content. (To get this number I'm using layout inspector with recompose count enabled)
 
 ```Plain-text
 Recomposition 
@@ -114,7 +114,7 @@ count: 0
 skips: 8
 ```
 
-If we look into buil/compose_compiler folder added in the gradle configuration we will see the following report:
+If we look into *build/compose_compiler* folder added in the gradle configuration we will see the following report:
 
 ```kotlin
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Listing(

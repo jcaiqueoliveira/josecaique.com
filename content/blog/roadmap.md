@@ -5,7 +5,7 @@ draft: false
 description: "Roadmap android 2024"
 image: "/img/roadmap.png"
 ---
-![roadmap](/img/roadmap.png)
+![Roadmap](/img/roadmap.png)
 
-As described in the youtube video here you can find the android roadmap.
-Try your best to get a solid understanding of what are you studing, so when the time pass you will for sure become a strong android dev. Fingers crossed!
+As described in the YouTube video here you can find the android roadmap.
+Try your best to get a solid understanding of what are you studying, so when the time pass you will for sure become a strong android dev. Fingers crossed!
