@@ -1,34 +1,32 @@
 languageCode = 'en'
 title = 'José Caique'
-theme = 'hugo-cat'
 PygmentsCodeFences = true
 PygmentsStyle = "solarized-dark256"
 pluralizelisttitles = "false"
-paginate  = 15
+[pagination]
+pagerSize = 15
 disableHugoGeneratorInject = false
 enableEmoji = true
 
 [params]
-ava = "/img/cat.png"
-owner ="Product mobile engineer"
-talk = ""
-blogSection = ["blog"]
-description = "José Caique"
+description = "Senior Mobile Engineer with 9+ years experience in Android development, Kotlin Multiplatform, cross-platform solutions, and technical leadership. Remote work specialist."
 favicon = "/img/favicon.ico"
 
-[[menu.main]]
-name = "Github"
-url = "https://www.github.com/jcaiqueoliveira"
-identifier = "/img/github.svg"
-weight = 2
+[[params.navlinks]]
+name = "Posts"
+url = "/posts/"
 
-[[menu.main]]
-name = "Linkedin"
-url = "https://www.linkedin.com/in/kandadev/"
-identifier = "/img/linkedin.svg"
-weight = 1
+[[params.navlinks]]
+name = "Talks"
+url = "/talks/"
+
+[[params.navlinks]]
+name = "About"
+url = "/about/"
 
 [module]
+  [[module.imports]]
+    path = "github.com/mrmierzejewski/hugo-theme-console"
   [module.hugoVersion]
     extended = true
     min = "0.111.3"
