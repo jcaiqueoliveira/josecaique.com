@@ -1,0 +1,78 @@
+/* Custom CSS to replace === headings with underline */
+:root {
+    --display-h1-decoration: 0 !important; /* Disable the default === decoration */
+    --global-font-size: 18px !important; /* Increase base font size for better readability */
+}
+
+/* Remove any potential pseudo-elements creating === */
+h1::after, h2::after, h1::before, h2::before,
+.post h1::after, .post h2::after, .post h1::before, .post h2::before {
+    content: none !important;
+    display: none !important;
+    border: none !important;
+}
+
+/* Add underline to h1 and h2 headings */
+h1, h2 {
+    text-decoration: underline !important;
+    text-decoration-color: var(--secondary-color) !important;
+    text-underline-offset: 0.3em !important;
+    text-decoration-thickness: 3px !important;
+    border-bottom: none !important;
+    position: relative !important;
+}
+
+/* Ensure post titles also get underline */
+.post h1, .post h2 {
+    text-decoration: underline !important;
+    text-decoration-color: var(--secondary-color) !important;
+    text-underline-offset: 0.3em !important;
+    text-decoration-thickness: 3px !important;
+    border-bottom: none !important;
+    position: relative !important;
+}
+
+/* Clean post layout without left spacing (like talks page) */
+.posts-list {
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+}
+
+.posts-list .post {
+    position: relative !important;
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+    margin-bottom: 30px !important;
+    top: 0 !important;
+}
+
+.posts-list .post p {
+    position: relative !important;
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+    top: 0 !important;
+}
+
+.posts-list .date {
+    display: block !important;
+    position: relative !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: auto !important;
+    margin-bottom: 5px !important;
+    font-weight: bold !important;
+    color: var(--secondary-color) !important;
+    z-index: auto !important;
+}
+
+.posts-list .post h1 {
+    margin-top: 0 !important;
+    margin-bottom: 5px !important;
+    padding-top: 0 !important;
+    position: relative !important;
+    left: 0 !important;
+}
+
+.posts-list .post h1 a {
+    position: relative !important;
+}

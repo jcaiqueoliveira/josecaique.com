@@ -11,6 +11,7 @@ enableEmoji = true
 [params]
 description = "Senior Mobile Engineer with 9+ years experience in Android development, Kotlin Multiplatform, cross-platform solutions, and technical leadership. Remote work specialist."
 favicon = "/img/favicon.ico"
+customCSS = ["/css/custom.css"]
 
 [[params.navlinks]]
 name = "Posts"

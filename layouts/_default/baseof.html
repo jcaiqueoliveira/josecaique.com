@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="{{ or site.LanguageCode site.Language.Lang }}" dir="{{ or site.Language.LanguageDirection `ltr` }}">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{{ block "title" . }}{{ with .Title }}{{ . }} | {{ end }}{{ site.Title }}{{ end }}</title>
+    <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ if .IsPage }}{{ .Summary }}{{ else }}{{ with site.Params.description }}{{ . }}{{ end }}{{ end }}{{ end }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+    <meta name="googlebot" content="index,follow,snippet,archive">
+    
+    <!-- Original theme CSS -->
+    {{ $console := resources.Get "hugo-theme-console/css/console.css" | default (resources.Get "/css/console.css") }}
+    {{ if $console }}
+        <link rel="stylesheet" href="{{ $console.RelPermalink }}">
+    {{ else }}
+        <link rel="stylesheet" href="/hugo-theme-console/css/terminal-0.7.4.min.css">
+        <link rel="stylesheet" href="/hugo-theme-console/css/animate-4.1.1.min.css">
+        <link rel="stylesheet" href="/hugo-theme-console/css/console.css">
+    {{ end }}
+    
+    <!-- Custom CSS to override headings -->
+    <link rel="stylesheet" href="/css/custom.css">
+    
+    <!-- Favicon -->
+    {{ with site.Params.favicon }}
+        <link rel="shortcut icon" href="{{ . }}">
+    {{ end }}
+    
+    <!-- RSS -->
+    {{ range .AlternativeOutputFormats -}}
+        {{ printf `<link href="%s" rel="%s" type="%s" title="%s" />` .RelPermalink .Rel .MediaType.Type site.Title | safeHTML }}
+    {{ end -}}
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
+    <meta property="og:url" content="{{ .Permalink }}">
+    <meta property="og:title" content="{{ .Title }}">
+    <meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{ if .IsPage }}{{ .Summary }}{{ else }}{{ with site.Params.description }}{{ . }}{{ end }}{{ end }}{{ end }}">
+    {{ with .Params.image }}<meta property="og:image" content="{{ . | absURL }}">{{ end }}
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="{{ .Permalink }}">
+    <meta name="twitter:title" content="{{ .Title }}">
+    <meta name="twitter:description" content="{{ with .Description }}{{ . }}{{ else }}{{ if .IsPage }}{{ .Summary }}{{ else }}{{ with site.Params.description }}{{ . }}{{ end }}{{ end }}{{ end }}">
+    {{ with .Params.image }}<meta name="twitter:image" content="{{ . | absURL }}">{{ end }}
+</head>
+
+<body class="terminal">
+    <div class="container">
+        <div class="terminal-nav">
+            <header class="terminal-logo">
+                <div class="logo terminal-prompt">
+                    <a href="{{ site.BaseURL }}" class="no-style">{{ site.Title }}</a>:~# 
+                    {{ with .Page.RelPermalink }}{{ if ne . "/" }}{{ . | strings.TrimSuffix "/" }}/{{ end }}{{ end }}
+                </div>
+            </header>
+            <nav class="terminal-menu">
+                <ul vocab="https://schema.org/" typeof="BreadcrumbList">
+                    {{ range $index, $link := site.Params.navlinks }}
+                    <li property="itemListElement" typeof="ListItem">
+                        <a property="item" typeof="WebPage" href="{{ $link.url }}">
+                            <span property="name">{{ $link.name }}</span>
+                        </a>
+                        <meta property="position" content="{{ add $index 1 }}">
+                    </li>
+                    {{ end }}
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <div class="container">
+        {{ block "main" . }}{{ end }}
+
+        {{ partial "footer.html" . }}
+    </div>
+</body>
+</html>
