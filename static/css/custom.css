@@ -1,7 +1,21 @@
+/* Import Fira Sans font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500;600;700&display=swap');
+
 /* Custom CSS to replace === headings with underline */
 :root {
     --display-h1-decoration: 0 !important; /* Disable the default === decoration */
     --global-font-size: 18px !important; /* Increase base font size for better readability */
+    --body-font-stack: 'Fira Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; /* Fira Sans with fallbacks */
+}
+
+/* Use proportional font for body text */
+body, p, li, blockquote, .post p {
+    font-family: var(--body-font-stack) !important;
+}
+
+/* Keep monospace for headings, code, and terminal elements */
+h1, h2, h3, h4, h5, h6, code, pre, .terminal-prompt, .terminal-menu {
+    font-family: var(--font-stack) !important;
 }
 
 /* Remove any potential pseudo-elements creating === */
